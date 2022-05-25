@@ -94,16 +94,16 @@ def wechat_init(msg: MessageInfo):
             {
                 "name": "我的",
                 "sub_button": [
-                        {
-                            "type": "click",
-                            "name": "今日积分",
-                            "key": "MENU_SCORE"
-                        },
                     {
-                            "type": "click",
-                            "name": "账号编码",
-                            "key": "MENU_OPENID"
-                            },
+                        "type": "click",
+                        "name": "今日积分",
+                        "key": "MENU_SCORE"
+                    },
+                    {
+                        "type": "click",
+                        "name": "账号编码",
+                        "key": "MENU_OPENID"
+                    },
                 ]
             }
         ]
@@ -126,7 +126,7 @@ def get_uid(oid):
     if wx_list:
         return wx_list[0]["accountId"]
     else:
-        return""
+        return ""
 
 
 def wechat_get_openid(msg: MessageInfo):
@@ -230,6 +230,8 @@ def wechat_admin_learn(msg: MessageInfo):
     """
     学习
     """
+    pdl.start()
+    wechat.send_text('所有成员开始学习', msg.from_user_name)
 
 
 def wechat_update(msg: MessageInfo):
@@ -244,9 +246,9 @@ def wechat_update(msg: MessageInfo):
             res = "当前代码已经是最新的了"
         else:
             os.popen("cp -r /xuexi/code/TechXueXi/SourcePackages/* /xuexi")
-            res = "代码更新完成"+msg
+            res = "代码更新完成" + msg
     except Exception as e:
-        res = "更新失败："+str(e)
+        res = "更新失败：" + str(e)
     wechat.send_text(res)
 
 

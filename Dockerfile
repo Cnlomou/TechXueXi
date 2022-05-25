@@ -44,8 +44,9 @@ RUN chmod +x ./supervisor.sh; \
     dos2unix ./start.sh;
 RUN mkdir code
 WORKDIR /xuexi/code
-RUN git config --global url."https://gitclone.com/".insteadOf https://; \
-    git clone -b ${usebranche} ${usesource}; cp -r /xuexi/code/TechXueXi/SourcePackages/* /xuexi;
+RUN git config --global url."https://hub.fastgit.xyz/".insteadOf "https://github.com/"; \
+    git clone -b ${usebranche} ${usesource}; \
+    cp -r /xuexi/code/TechXueXi/SourcePackages/* /xuexi;
 COPY ./SourcePackages /xuexi/
 WORKDIR /xuexi
 EXPOSE 80

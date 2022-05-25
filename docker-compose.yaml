@@ -5,7 +5,7 @@ services:
 #        build:
 #          context: .
 #        image: techxuexi/techxuexi-amd64
-        image: cnlomou/xuexitech:v2
+        image: cnlomou/xuexitech:1.2
         container_name: techxi-wechat
         restart: always
         volumes:
@@ -15,6 +15,6 @@ services:
         shm_size: 2gb
         environment:
             - CRONTIME="0 10 0,18 * * ? *"
-            - Pushmode=1
+            - Pushmode=6
             - ZhuanXiang=True
             - Scheme=http://http://106.58.187.188:11111/static/jump.html?
