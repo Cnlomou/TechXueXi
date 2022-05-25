@@ -230,8 +230,8 @@ def wechat_admin_learn(msg: MessageInfo):
     """
     学习
     """
-    pdl.start()
     wechat.send_text('所有成员开始学习', msg.from_user_name)
+    pdl.start()
 
 
 def wechat_update(msg: MessageInfo):
