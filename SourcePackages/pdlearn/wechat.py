@@ -40,6 +40,7 @@ class WechatHandler:
         return self.token
 
     def send_text(self, text: STRING, uid="", convert=True):
+        openId = None
         if convert:
             openId = self.get_opendid_by_uid(uid)
         if not openId:
