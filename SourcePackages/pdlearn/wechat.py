@@ -39,8 +39,9 @@ class WechatHandler:
         file.save_json_data("user/wechat_token.json", self.token)
         return self.token
 
-    def send_text(self, text: STRING, uid=""):
-        openId = self.get_opendid_by_uid(uid)
+    def send_text(self, text: STRING, uid="", convert=True):
+        if convert:
+            openId = self.get_opendid_by_uid(uid)
         if not openId:
             openId = self.openid
         if text.startswith("http") or text.startswith("dtxuexi"):

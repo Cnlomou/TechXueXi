@@ -142,7 +142,7 @@ def wechat_learn(msg: MessageInfo):
     """
     uid = get_uid(msg.from_user_name)
     if not uid:
-        wechat.send_text("您未绑定账号，请联系管理员绑定", msg.from_user_name)
+        wechat.send_text("您未绑定账号，请联系管理员绑定", msg.from_user_name, False)
     else:
         pdl.start(uid)
 
@@ -153,7 +153,7 @@ def wechat_get_score(msg: MessageInfo):
     """
     uid = get_uid(msg.from_user_name)
     if not uid:
-        wechat.send_text("您未绑定账号，请联系管理员绑定", msg.from_user_name)
+        wechat.send_text("您未绑定账号，请联系管理员绑定", msg.from_user_name, False)
     else:
         score = pdl.get_my_score(uid)
         if not score:
