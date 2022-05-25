@@ -87,16 +87,12 @@ def init_global():
     is_init = True
 
 
-def pushprint(text, chat_id=None):
+def pushprint(text, chat_id=None, originpush=True):
     """
     推送或者显示
     """
     global push_msg
-    if nohead == True:
-        # 如果存在全局消息，追加该消息，同时发送，并清空该消息
-        if push_msg:
-            text = push_msg+"\n"+text
-            push_msg = ''
+    if nohead and originpush:
         print(accesstoken, secret)
         if pushmode == "1":
             push = DingDingHandler(accesstoken, secret)
@@ -113,6 +109,10 @@ def pushprint(text, chat_id=None):
             tg_bot.send_message(text)
         elif pushmode == "6":
             web.add_message(text)
+    # 如果存在全局消息，打印
+    if push_msg:
+        text = push_msg + "\n" + text
+        push_msg = ''
     print(text)
 
 
