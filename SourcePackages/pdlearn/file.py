@@ -17,15 +17,16 @@ def check_directory(filename):
 def get_json_data(filename, template_json_str):
     check_directory(filename)
     if(os.path.exists(filename) and os.path.getsize(filename) != 0):
-        # lock.reader_lock.acquire()
+        lock.reader_lock.acquire()
         with open(filename, 'r', encoding='utf-8') as j:
             try:
                 json_data = json.load(j)
             except Exception as e:
                 print(filename, "解析错误：", str(e))
                 print("请检查", filename, "信息")
+                exit(-1)
             finally:
-                # lock.reader_lock.release()
+                lock.reader_lock.release()
 
                 # # 打开非 user status 文件可能造成问题。
                 # # ✨ U****** 不让改 5555~~~
@@ -47,7 +48,6 @@ def get_json_data(filename, template_json_str):
                 #         for line in new:
                 #             conf.write(line)
 
-                exit(-1)
     else:
         json_data = json.loads(template_json_str)
     return json_data
@@ -55,29 +55,29 @@ def get_json_data(filename, template_json_str):
 
 def save_json_data(filename, object_to_save, sort_keys=True):
     check_directory(filename)
-    # lock.writer_lock.acquire()
+    lock.writer_lock.acquire()
     with open(filename, 'w', encoding='utf-8') as o:
         try:
             json.dump(object_to_save, o, sort_keys=True, indent=4,
                       separators=(',', ':'), ensure_ascii=False)
         except Exception as e:
             print(e.__str__())
-        # finally:
-            # lock.writer_lock.release()
+        finally:
+            lock.writer_lock.release()
 
 
 def get_conf_file(filename, template_conf_str):
     check_directory(filename)
     if(os.path.exists(filename) and os.path.getsize(filename) != 0):
         try:
-            # lock.reader_lock.acquire()
+            lock.reader_lock.acquire()
             conf_obj = ConfigFactory.parse_file(filename)
         except Exception as e:
             print(filename, "解析错误：", str(e))
             print("请检查", filename, "信息")
             exit()
-        # finally:
-            # lock.reader_lock.release()
+        finally:
+            lock.reader_lock.release()
     else:
         save_text_file(filename, template_conf_str)
         conf_obj = get_conf_file(filename, template_conf_str)
@@ -86,11 +86,11 @@ def get_conf_file(filename, template_conf_str):
 
 def save_text_file(filename, text):
     check_directory(filename)
-    # lock.writer_lock.acquire()
+    lock.writer_lock.acquire()
     with open(filename, 'w', encoding='utf-8') as o:
         try:
             o.write(text)
         except Exception as e:
             print(e.__str__())
-        # finally:
-            # lock.writer_lock.release()
+        finally:
+            lock.writer_lock.release()
