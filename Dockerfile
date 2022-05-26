@@ -4,7 +4,7 @@ ARG usesource="https://github.com/Cnlomou/TechXueXi.git"
 ARG usebranche="dev"
 ENV pullbranche=${usebranche}
 ENV Sourcepath=${usesource}
-RUN RUN  sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list; \
+RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list; \
     apt-get clean; \
     apt-get update; \
     apt-get install -y wget unzip libzbar0 git cron supervisor dos2unix
@@ -14,7 +14,7 @@ ENV Secret=
 ENV Nohead=True
 ENV Pushmode=1
 ENV islooplogin=False
-ENV CRONTIME="30 9 * * *"
+ENV CRONTIME=30 9 * * *
 # RUN rm -f /xuexi/config/*; ls -la
 COPY requirements.txt /xuexi/requirements.txt
 COPY run.sh /xuexi/run.sh 
