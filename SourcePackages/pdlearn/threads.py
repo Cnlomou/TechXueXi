@@ -28,7 +28,7 @@ executor = ThreadPoolExecutor(4)
 
 # signal.signal(signal.SIGINT,signal_handler)
 def newTastandRun(fnc, *args):
-    return executor.submit(fnc, args)
+    return executor.submit(fnc, *args)
 
 
 class MyThread(Thread):
