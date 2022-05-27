@@ -123,6 +123,13 @@ def start_learn(uid, name):
         pass
 
 
+def startTask(*args):
+    if len(args) < 2:
+        print("学生任务参数太短")
+        exit(-1)
+    start_learn(args[0], args[1])
+
+
 def start(nick_name=None):
     nohead, lock, stime, Single = get_argv()
     # info_shread = threads.MyThread("获取更新信息...", version.up_info)
@@ -138,7 +145,7 @@ def start(nick_name=None):
                 isLogin = True
                 if not Single:
                     gl.pushprint(user_list[i][0] + "即将开始学xi", user_list[i][0])
-                    threads.newTastandRun(start_learn, user_list[i][0], user_list[i][1])
+                    threads.newTastandRun(startTask, user_list[i][0], user_list[i][1])
                 else:
                     _learn = threads.MyThread(
                         user_list[i][0] + "开始学xi", start_learn, user_list[i][0], user_list[i][1], lock=Single)
