@@ -41,6 +41,7 @@ def get_argv():
 
 def start_learn(uid, name):
     #  0 读取版本信息
+    print("开启： " + name + "开始学习")
     start_time = time.time()
     nohead, lock, stime, Single = get_argv()
     print("是否无头模式：{0} {1}".format(nohead, os.getenv('Nohead')))
@@ -55,14 +56,14 @@ def start_learn(uid, name):
         user_fullname = user.get_fullname(uid)
         name = user_fullname.split('_', 1)[1]
     else:
-        user_fullname = uid+"_"+name
+        user_fullname = uid + "_" + name
 
     if not cookies or TechXueXi_mode == "0":
         msg = ""
         if name == "新用户":
             msg = "需要增加新用户，请扫码登录，否则请无视"
         else:
-            msg = name+" 登录信息失效，请重新扫码"
+            msg = name + " 登录信息失效，请重新扫码"
         # print(msg)
         gl.pushprint(msg, chat_id=uid)
         if gl.pushmode == "6":
@@ -88,7 +89,6 @@ def start_learn(uid, name):
     total, scores = show_score(cookies)
     gl.pushprint(output, chat_id=uid)
     if TechXueXi_mode in ["1", "3"]:
-
         article_thread = threads.MyThread(
             "文章学 xi ", article, uid, cookies, article_index, scores, lock=lock)
         video_thread = threads.MyThread(
@@ -114,7 +114,7 @@ def start_learn(uid, name):
         user.refresh_all_cookies(live_time=11.90)
 
     seconds_used = int(time.time() - start_time)
-    gl.pushprint(name+" 总计用时 " + str(math.floor(seconds_used / 60)) +
+    gl.pushprint(name + " 总计用时 " + str(math.floor(seconds_used / 60)) +
                  " 分 " + str(seconds_used % 60) + " 秒", chat_id=uid)
     show_scorePush(cookies, chat_id=uid)
     try:
@@ -136,13 +136,16 @@ def start(nick_name=None):
         try:
             if nick_name == None or nick_name == user_list[i][1] or nick_name == user_list[i][0]:
                 isLogin = True
-                _learn = threads.MyThread(
-                    user_list[i][0]+"开始学xi", start_learn, user_list[i][0], user_list[i][1], lock=Single)
-                _learn.start()
+                if not Single:
+                    threads.newTastandRun(lambda uid, n: start_learn(uid, n), user_list[i][0], user_list[i][1])
+                else:
+                    _learn = threads.MyThread(
+                        user_list[i][0] + "开始学xi", start_learn, user_list[i][0], user_list[i][1], lock=Single)
+                    _learn.start()
         except:
             gl.pushprint("学习页面崩溃，学习终止")
     if not isLogin and nick_name:
-        gl.pushprint("登录过时，即将重新登录。。",nick_name)
+        gl.pushprint("登录过时，即将重新登录。。", nick_name)
         add_user(nick_name)
 
 
@@ -162,7 +165,7 @@ def get_user_list():
     values = dic.values()
     msg = ""
     for v in values:
-        msg += v+"\n"
+        msg += v + "\n"
     if msg == "":
         msg = "cookie全部过期，请重新登录"
     return msg
@@ -189,11 +192,11 @@ def add_user(chat_id=None):
     uid = user.get_userId(cookies)
     user_fullname = user.get_fullname(uid)
     user.update_last_user(uid)
-    gl.pushprint(user_fullname+"登录成功", chat_id=chat_id)
+    gl.pushprint(user_fullname + "登录成功", chat_id=chat_id)
 
 
 if __name__ == '__main__':
-    if(cfg_get('display.banner') != False):  # banner文本直接硬编码，不要放在conf中
+    if (cfg_get('display.banner') != False):  # banner文本直接硬编码，不要放在conf中
         print("=" * 60 +
               '\n    我们的网站，GitHub 等页面已经被中国大陆的浏览器加入黑名单，请用谷歌浏览器 chrome 打开我们的站点。' +
               '\n    科技强 guo 官方网站：https://techxuexi.js.org' +

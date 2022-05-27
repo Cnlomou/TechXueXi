@@ -3,10 +3,11 @@
 # from pdlearn import color
 from threading import Thread
 from threading import Lock
+from concurrent.futures import ThreadPoolExecutor
 
 threadLock = Lock()
 threads = []
-
+executor = ThreadPoolExecutor(4)
 # stop_functions = []
 
 # def regist_stop_function(func):
@@ -24,7 +25,8 @@ threads = []
 #     sys.exit()
 
 # signal.signal(signal.SIGINT,signal_handler)
-
+def newTastandRun(fnc,*args, **kwargs) :
+    return executor.submit(fnc,args,kwargs)
 
 class MyThread(Thread):
     def __init__(self, name, func, *args, lock=False):
@@ -35,10 +37,10 @@ class MyThread(Thread):
         self.lock = lock
 
     def run(self):
-        print("开启： " + self.name)
         if self.lock:
             threadLock.acquire()
             self.func(*self.args)
             threadLock.release()
         else:
             self.func(*self.args)
+

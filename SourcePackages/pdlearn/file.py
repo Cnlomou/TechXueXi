@@ -75,7 +75,7 @@ def get_conf_file(filename, template_conf_str):
         except Exception as e:
             print(filename, "解析错误：", str(e))
             print("请检查", filename, "信息")
-            exit()
+            exit(-1)
         finally:
             lock.reader_lock.release()
     else:

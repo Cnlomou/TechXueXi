@@ -139,10 +139,13 @@ def save_cookies(cookies):
 
 def remove_cookie(uid):
     template_json_str = '''{}'''
-    cookies_json_obj = file.get_json_data(
-        "user/cookies.json", template_json_str)
-    cookies_json_obj.pop(str(uid))
-    file.save_json_data("user/cookies.json", cookies_json_obj)
+    try:
+        cookies_json_obj = file.get_json_data(
+            "user/cookies.json", template_json_str)
+        cookies_json_obj.pop(str(uid))
+        file.save_json_data("user/cookies.json", cookies_json_obj)
+    except Exception as e:
+        print(color.red(e.__str__()))
 
 
 def get_article_video_json():
