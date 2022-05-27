@@ -11,6 +11,7 @@ from pdlearn.wechat import WechatHandler
 from pdlearn.threads import MyThread
 from pdlearn import file
 import pandalearning as pdl
+import pdlearn.threads as threads
 
 app = Flask(__name__)
 appid = cfg_get("addition.wechat.appid", "")
@@ -94,6 +95,11 @@ def wechat_init(msg: MessageInfo):
             {
                 "name": "我的",
                 "sub_button": [
+                    {
+                        "type": "click",
+                        "name": "登录",
+                        "key": "MENU_LOGIN"
+                    },
                     {
                         "type": "click",
                         "name": "今日积分",
@@ -252,6 +258,14 @@ def wechat_update(msg: MessageInfo):
     wechat.send_text(res)
 
 
+def login(msg: MessageInfo):
+    uid = get_uid(msg.from_user_name)
+    if not uid:
+        wechat.send_text("请先联系管理员绑定", msg.from_user_name, False)
+    else:
+        pdl.add_user(uid)
+
+
 @app.route('/wechat', methods=['GET', 'POST'])
 def weixinInterface():
     if check_signature:
@@ -268,6 +282,8 @@ def weixinInterface():
                     MyThread("wechat_learn", wechat_learn, msg).start()
                 if msg.event_key == "MENU_SCORE":
                     MyThread("wechat_get_score", wechat_get_score, msg).start()
+                if msg.event_key == "MENU_LOGIN":
+                    threads.newTastandRun(lambda: login(msg))
             if msg.from_user_name == openid:
                 if msg.content.startswith("/init"):
                     return wechat_init(msg)

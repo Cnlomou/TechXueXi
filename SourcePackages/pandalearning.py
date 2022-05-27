@@ -137,7 +137,8 @@ def start(nick_name=None):
             if nick_name == None or nick_name == user_list[i][1] or nick_name == user_list[i][0]:
                 isLogin = True
                 if not Single:
-                    threads.newTastandRun(lambda uid, n: start_learn(uid, n), user_list[i][0], user_list[i][1])
+                    gl.pushprint(user_list[i][0] + "即将开始学xi", user_list[i][0])
+                    threads.newTastandRun(lambda: start_learn(user_list[i][0], user_list[i][1]))
                 else:
                     _learn = threads.MyThread(
                         user_list[i][0] + "开始学xi", start_learn, user_list[i][0], user_list[i][1], lock=Single)
