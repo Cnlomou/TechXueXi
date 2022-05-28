@@ -3,20 +3,39 @@ import sys
 import json
 from pyhocon import ConfigFactory
 import rwlock
-lock = rwlock.RWLock()
+
+config_files = ['user/article_video_index.json',
+                'user/settings.conf',
+                'user/cookies.json',
+                'user/settings.conf',
+                'user/user_status.json',
+                'user/wechat_bind.json',
+                'user/wechat_token.json',
+                '']
+lk_map = {}
+for key in config_files:
+    lk_map[key] = rwlock.RWLock()
+
+
+def get_lock(filename):
+    if filename in lk_map:
+        return lk_map[filename]
+    return lk_map['']
+
 
 def check_directory(filename):
     # filename 最多支持一层文件夹下的json
     # os.chdir(sys.path[0]) # 切换pwd到python文件路径
     split_filename = filename.split("/", 1)
-    if(len(split_filename) > 1):  # 包含一层文件夹
-        if(not os.path.exists(split_filename[0])):
+    if (len(split_filename) > 1):  # 包含一层文件夹
+        if (not os.path.exists(split_filename[0])):
             os.mkdir(split_filename[0])
 
 
 def get_json_data(filename, template_json_str):
     check_directory(filename)
-    if(os.path.exists(filename) and os.path.getsize(filename) != 0):
+    lock = get_lock(filename)
+    if (os.path.exists(filename) and os.path.getsize(filename) != 0):
         lock.reader_lock.acquire()
         with open(filename, 'r', encoding='utf-8') as j:
             try:
@@ -55,6 +74,7 @@ def get_json_data(filename, template_json_str):
 
 def save_json_data(filename, object_to_save, sort_keys=True):
     check_directory(filename)
+    lock = get_lock(filename)
     lock.writer_lock.acquire()
     with open(filename, 'w', encoding='utf-8') as o:
         try:
@@ -68,7 +88,8 @@ def save_json_data(filename, object_to_save, sort_keys=True):
 
 def get_conf_file(filename, template_conf_str):
     check_directory(filename)
-    if(os.path.exists(filename) and os.path.getsize(filename) != 0):
+    lock = get_lock(filename)
+    if (os.path.exists(filename) and os.path.getsize(filename) != 0):
         try:
             lock.reader_lock.acquire()
             conf_obj = ConfigFactory.parse_file(filename)
@@ -86,6 +107,7 @@ def get_conf_file(filename, template_conf_str):
 
 def save_text_file(filename, text):
     check_directory(filename)
+    lock = get_lock(filename)
     lock.writer_lock.acquire()
     with open(filename, 'w', encoding='utf-8') as o:
         try:

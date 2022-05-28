@@ -13,6 +13,7 @@ ENV AccessToken=
 ENV Secret=
 ENV Nohead=True
 ENV Pushmode=1
+ENV MaxWorkers=4
 ENV islooplogin=False
 ENV CRONTIME=30 9 * * *
 # RUN rm -f /xuexi/config/*; ls -la
