@@ -56,7 +56,7 @@ def show_scorePush(cookies, chat_id=None):
 
 def get_score(cookies):
     chat_id = None
-    th_name = threading.current_thread().name
+    th_name = threading.current_thread().getName()
     if "开始学xi" in th_name:
         chat_id = th_name[:th_name.index("开始学xi")]
     requests.adapters.DEFAULT_RETRIES = 5

@@ -2,6 +2,7 @@ import math
 import os
 import sys
 import time
+import threading
 from sys import argv
 
 from pdlearn import boot
@@ -41,7 +42,9 @@ def get_argv():
 
 def start_learn(uid, name):
     #  0 读取版本信息
-    print("开启： " + name + "开始学习")
+    msg = uid + '开始学xi'
+    print("开启： " + msg)
+    threading.current_thread().setName(msg)
     start_time = time.time()
     nohead, lock, stime, Single = get_argv()
     print("是否无头模式：{0} {1}".format(nohead, os.getenv('Nohead')))
