@@ -7,7 +7,12 @@ from concurrent.futures import ThreadPoolExecutor
 import pdlearn.config as config
 
 threadLock = Lock()
-executor = ThreadPoolExecutor(int(config.get_env_or_cfg("addition.MaxWorkers", def_value=4)))
+
+
+def initThreadPool():
+    count = int(config.get_env_or_cfg("addition.MaxWorkers", 'MaxWorkers', def_value=4))
+    print('初始线程数：', count)
+    return ThreadPoolExecutor(count)
 
 
 # stop_functions = []
@@ -47,3 +52,6 @@ class MyThread(Thread):
             threadLock.release()
         else:
             self.func(*self.args)
+
+
+executor = initThreadPool()
