@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 import pdlearn.config as config
 
 threadLock = Lock()
-executor = ThreadPoolExecutor(int(config.get_env_or_cfg("addition.MaxWorkers", 4)))
+executor = ThreadPoolExecutor(int(config.get_env_or_cfg("addition.MaxWorkers", def_value=4)))
 
 
 # stop_functions = []
