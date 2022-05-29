@@ -31,7 +31,8 @@ def article(userId, cookies, article_pointer, scores):
                         for j in range(readarticle_time):
                             if random.random() > 0.5:
                                 driver_article.go_js('window.scrollTo(0, document.body.scrollHeight/120*{})'.format(j))
-                            print("\r文章数量学 xi 中，文章剩余{}篇,本篇剩余时间{}秒".format(article_pointer + article_remain - i, readarticle_time - j), end="")
+                            if j % 10 == 0:
+                                print("\r文章数量学 xi 中，文章剩余{}篇,本篇剩余时间{}秒".format(article_pointer + article_remain - i, readarticle_time - j), end="")
                             time.sleep(1)
                         driver_article.go_js('window.scrollTo(0, document.body.scrollHeight)')
                         total, scores = show_score(cookies)
@@ -52,7 +53,8 @@ def article(userId, cookies, article_pointer, scores):
                         if random.random() > 0.5:
                             driver_article.go_js(
                                 'window.scrollTo(0, document.body.scrollHeight/{}*{})'.format(remaining, i))
-                        print("\r文章时长学 xi 中，文章总时长剩余{}秒".format(remaining - i), end="")
+                        if i % 10 == 0:
+                            print("\r文章时长学 xi 中，文章总时长剩余{}秒".format(remaining - i), end="")
                         time.sleep(1)
                         if i % (60) == 0 and i != remaining:
                             total, scores = show_score(cookies)
@@ -96,7 +98,8 @@ def video(userId, cookies, video_pointer, scores):
                         for j in range(watchvideo_time):
                             if random.random() > 0.5:
                                 driver_video.go_js('window.scrollTo(0, document.body.scrollHeight/180*{})'.format(j))
-                            print("\r视频数量学 xi 中，视频剩余{}个,本次剩余时间{}秒".format(video_pointer + v_num - i, watchvideo_time - j), end="")
+                            if j % 10 == 10:
+                                print("\r视频数量学 xi 中，视频剩余{}个,本次剩余时间{}秒".format(video_pointer + v_num - i, watchvideo_time - j), end="")
                             time.sleep(1)
                         driver_video.go_js('window.scrollTo(0, document.body.scrollHeight)')
                         total, scores = show_score(cookies)
@@ -117,7 +120,8 @@ def video(userId, cookies, video_pointer, scores):
                         if random.random() > 0.5:
                             driver_video.go_js(
                                 'window.scrollTo(0, document.body.scrollHeight/{}*{})'.format(remaining, i))
-                        print("\r视频时长学 xi 中，视频总时长剩余{}秒".format(remaining - i), end="")
+                        if i % 10 == 10:
+                            print("\r视频时长学 xi 中，视频总时长剩余{}秒".format(remaining - i), end="")
                         time.sleep(1)
                         if i % (60) == 0 and i != remaining:
                             total, scores = show_score(cookies)

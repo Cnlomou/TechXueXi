@@ -92,14 +92,18 @@ def start_learn(uid, name):
     total, scores = show_score(cookies)
     gl.pushprint(output, chat_id=uid)
     if TechXueXi_mode in ["1", "3"]:
-        article_thread = threads.MyThread(
-            "文章学 xi ", article, uid, cookies, article_index, scores, lock=lock)
-        video_thread = threads.MyThread(
-            "视频学 xi ", video, uid, cookies, video_index, scores, lock=lock)
-        article_thread.start()
-        video_thread.start()
-        article_thread.join()
-        video_thread.join()
+        future_article = threads.newTastandRun(article, uid, cookies, article_index, scores)
+        future_vedio = threads.newTastandRun(video, uid, cookies, article_index, scores)
+        future_article.result()
+        future_vedio.result()
+        # article_thread = threads.MyThread(
+        #     "文章学 xi ", article, uid, cookies, article_index, scores, lock=lock)
+        # video_thread = threads.MyThread(
+        #     "视频学 xi ", video, uid, cookies, video_index, scores, lock=lock)
+        # article_thread.start()
+        # video_thread.start()
+        # article_thread.join()
+        # video_thread.join()
     if TechXueXi_mode in ["2", "3"]:
         print('开始每日答题……')
         daily(cookies, scores)
