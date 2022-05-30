@@ -1,3 +1,4 @@
+初始线程数： 2
  * Serving Flask app 'webServerConf' (lazy loading)
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
@@ -8,5 +9,29 @@
  * Running on http://127.0.0.1:80
  * Running on http://172.20.0.2:80 (Press CTRL+C to quit)
  * Restarting with stat
+初始线程数： 2
  * Debugger is active!
- * Debugger PIN: 998-351-821
+ * Debugger PIN: 538-202-085
+172.20.0.1 - - [30/May/2022 13:53:29] "GET / HTTP/1.1" 302 -
+172.20.0.1 - - [30/May/2022 13:53:29] "GET /static/index.html HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:53] "GET /api/list_users_status_from_memory HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:53] "GET /api/list_messages HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:53] "GET /api/list_qrurls HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:53] "GET /api/now HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:54] "GET /kjqg.ico HTTP/1.1" 404 -
+172.20.0.1 - - [30/May/2022 13:53:54] "GET /api/list_users_status_from_memory HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:54] "GET /api/list_messages HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:54] "GET /api/list_qrurls HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:54] "GET /api/now HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:55] "GET /api/list_users_status_from_memory HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:55] "GET /api/list_qrurls HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:55] "GET /api/list_messages HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:55] "GET /api/now HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:56] "GET /api/list_users_status_from_memory HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:56] "GET /api/list_messages HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:56] "GET /api/now HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:56] "GET /api/list_qrurls HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:57] "GET /api/list_users_status_from_memory HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:57] "GET /api/list_qrurls HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:57] "GET /api/now HTTP/1.1" 200 -
+172.20.0.1 - - [30/May/2022 13:53:57] "GET /api/list_messages HTTP/1.1" 200 -

@@ -7,20 +7,20 @@ ENV Sourcepath=${usesource}
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list; \
     apt-get clean; \
     apt-get update; \
-    apt-get install -y wget unzip libzbar0 git cron supervisor dos2unix
-ENV TZ=Asia/Shanghai
-ENV AccessToken=
-ENV Secret=
-ENV Nohead=True
-ENV Pushmode=1
-ENV MaxWorkers=4
-ENV islooplogin=False
-ENV CRONTIME=30 9 * * *
+    apt-get install -y wget unzip libzbar0 git cron supervisor dos2unix;
+ENV TZ=Asia/Shanghai \
+    AccessToken=  \
+    Secret=   \
+    Nohead=True  \
+    Pushmode=1   \
+    MaxWorkers=4 \
+    islooplogin=False \
+    CRONTIME="10 18,0 * * *"
 # RUN rm -f /xuexi/config/*; ls -la
-COPY requirements.txt /xuexi/requirements.txt
-COPY run.sh /xuexi/run.sh 
-COPY start.sh /xuexi/start.sh 
-COPY supervisor.sh /xuexi/supervisor.sh
+COPY requirements.txt  /xuexi/requirements.txt
+COPY run.sh  /xuexi/run.sh
+COPY start.sh  /xuexi/start.sh
+COPY supervisor.sh  /xuexi/supervisor.sh
 
 RUN pip install -r /xuexi/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 RUN cd /xuexi/; \
@@ -42,13 +42,13 @@ RUN chmod +x ./start.sh
 RUN chmod +x ./supervisor.sh; \
     dos2unix ./supervisor.sh; \
     dos2unix ./run.sh; \
-    dos2unix ./start.sh;
+    dos2unix ./start.sh
 RUN mkdir code
 WORKDIR /xuexi/code
 RUN git config --global url."https://hub.fastgit.xyz/".insteadOf "https://github.com/"; \
     git clone -b ${usebranche} ${usesource}; \
-    cp -r /xuexi/code/TechXueXi/SourcePackages/* /xuexi;
-COPY ./SourcePackages /xuexi/
+    cp -r /xuexi/code/TechXueXi/SourcePackages/* /xuexi
+COPY ./SourcePackages  /xuexi/
 WORKDIR /xuexi
 EXPOSE 80
 ENTRYPOINT ["/bin/bash", "./start.sh"]

@@ -1,20 +1,17 @@
-version: "3.6"
-
 services:
     techxuexi:
-#        build:
-#          context: .
-#        image: techxuexi/techxuexi-amd64
-        image: cnlomou/xuexitech:1.2
+        image: cnlomou/xuexitech:1.4
         container_name: techxi-wechat
-        restart: always
+        restart: on-failure
         volumes:
             - ./xuexi:/xuexi/user
         ports:
             - 16666:8088
+            - 16667:80
         shm_size: 2gb
         environment:
-            - CRONTIME="0 10 0,18 * * ? *"
+            - CRONTIME=10 18,0 * * *
             - Pushmode=6
             - ZhuanXiang=True
-            - Scheme=http://http://106.58.187.188:11111/static/jump.html?
+            - Scheme=
+            - MaxWorkers=2
