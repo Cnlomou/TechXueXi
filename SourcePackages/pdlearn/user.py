@@ -8,6 +8,7 @@ import requests
 from requests.cookies import RequestsCookieJar
 from sys import argv
 from pdlearn import score
+from pdlearn import globalvar as gl
 from pdlearn import file
 from pdlearn import color
 from pdlearn.mydriver import Mydriver
@@ -237,12 +238,13 @@ def refresh_all_cookies(live_time=8.0, display_score=False):  # cookie有效时�
             if 'name' in d and 'value' in d and 'expiry' in d and d["name"] == "token":
                 remain_time = (int(d['expiry']) - (int)(time.time())) / 3600
                 msg = get_nickname(uid) + " 登录剩余有效时间：" + \
-                    str(int(remain_time * 10) / 10) + " 小时."
+                      str(int(remain_time * 10) / 10) + " 小时."
                 print(color.green(msg), end="")
                 msgInfo[uid] = msg
                 if remain_time < 0:
                     print(color.red(" 已过期 需要重新登陆，将自动移除此cookie."))
                     remove_cookie(uid)
+                    gl.pushprint("已过期 需要重新登陆!!!", uid)
                 else:
                     # print(color.blue(" 有效"), end="")
                     valid_cookies.append(cookie_list)
@@ -271,6 +273,7 @@ def refresh_all_cookies(live_time=8.0, display_score=False):  # cookie有效时�
                                 found_token = True
                         if not found_token:
                             remove_cookie(uid)  # cookie不含token则无效，删除cookie
+                            gl.pushprint("已过期 需要重新登陆!!!", uid)
                         else:
                             save_cookies(new_cookies)
                     else:
@@ -284,7 +287,7 @@ def refresh_all_cookies(live_time=8.0, display_score=False):  # cookie有效时�
             print(color.blue(get_fullname(user_id)) + " 的今日得分：")
             total, scores = score.show_score(cookie)
             if str(user_id) in msgInfo:
-                msgInfo[str(user_id)] += " 今日得分："+str(scores["today"])
+                msgInfo[str(user_id)] += " 今日得分：" + str(scores["today"])
     return msgInfo
 
 
