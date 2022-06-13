@@ -260,6 +260,7 @@ def refresh_all_cookies(live_time=8.0, display_score=False):  # cookie有效时�
                         #                         headers={'Cache-Control': 'no-cache'}).cookies.get_dict()
                         # 浏览器登陆方式更新cookie，速度较慢但可靠
                         driver_login = Mydriver(nohead=False)
+                        new_cookies = ''
                         try:
                             driver_login.get_url(
                                 "https://www.xuexi.cn/notFound.html")
