@@ -260,13 +260,17 @@ def refresh_all_cookies(live_time=8.0, display_score=False):  # cookie有效时�
                         #                         headers={'Cache-Control': 'no-cache'}).cookies.get_dict()
                         # 浏览器登陆方式更新cookie，速度较慢但可靠
                         driver_login = Mydriver(nohead=False)
-                        driver_login.get_url(
-                            "https://www.xuexi.cn/notFound.html")
-                        driver_login.set_cookies(cookie_list)
-                        driver_login.get_url(
-                            'https://pc.xuexi.cn/points/my-points.html')
-                        new_cookies = driver_login.get_cookies()
-                        driver_login.quit()
+                        try:
+                            driver_login.get_url(
+                                "https://www.xuexi.cn/notFound.html")
+                            driver_login.set_cookies(cookie_list)
+                            driver_login.get_url(
+                                'https://pc.xuexi.cn/points/my-points.html')
+                            new_cookies = driver_login.get_cookies()
+                        except Exception as e:
+                            print(color.red(e))
+                        finally:
+                            driver_login.quit()
                         found_token = False
                         for j in new_cookies:  # 检查token
                             if 'name' in j and j["name"] == "token":
