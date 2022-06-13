@@ -69,21 +69,11 @@ def start_learn(uid, name):
             msg = name + " 登录信息失效，请重新扫码"
         # print(msg)
         gl.pushprint(msg, chat_id=uid)
+        user.remove_cookie(uid)
         if gl.pushmode == "6":
             gl.pushprint("web模式跳过自动获取二维码,请手动点击添加按钮", chat_id=uid)
             print(color.red("【#️⃣】 若直接退出请运行：webserverListener.py"))
-            return
-        driver_login = Mydriver()
-        cookies = driver_login.login(uid)
-        driver_login.quit()
-        if not cookies:
-            print("登录超时")
-            return
-        user.save_cookies(cookies)
-        uid = user.get_userId(cookies)
-        user_fullname = user.get_fullname(uid)
-        name = user_fullname.split('_', 1)[1]
-        user.update_last_user(uid)
+        return
     output = name + " 登录正常，开始学习...\n"
 
     article_index = user.get_article_index(uid)
