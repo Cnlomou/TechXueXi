@@ -49,6 +49,9 @@ def start_learn(uid, name):
     nohead, lock, stime, Single = get_argv()
     print("是否无头模式：{0} {1}".format(nohead, os.getenv('Nohead')))
     cookies = user.get_cookie(uid)
+    if not cookies:
+        gl.pushprint("登录过期，请重新登录！！", uid)
+        return
     if nohead == True:
         TechXueXi_mode = "3"
     else:
@@ -144,7 +147,7 @@ def start(nick_name=None):
         except:
             gl.pushprint("学习页面崩溃，学习终止")
         if not isLogin and nick_name:
-            gl.pushprint("登录过时，即将重新登录。。", nick_name)
+            gl.pushprint("登录过时，即将重新登录。。", user_list[i][0])
 
 
 def get_my_score(uid):
