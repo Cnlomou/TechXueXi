@@ -34,7 +34,7 @@ class WechatHandler:
             'secret': appsecret,
         }).json()
         token = res.get('access_token')
-        expires = int(res.get('expires_in'))-10+time.time()
+        expires = int(res.get('expires_in')) - 10 + time.time()
         self.token = [token, expires]
         file.save_json_data("user/wechat_token.json", self.token)
         return self.token
@@ -50,9 +50,14 @@ class WechatHandler:
             if login_tempid:
                 return self.send_template(login_tempid, {"name": {"value": "用户"}}, openId, text)
         if "当前学 xi 总积分" in text:
-            login_tempid = cfg_get("addition.wechat.score_tempid", "")
-            if login_tempid:
-                return self.send_template(login_tempid, {"score": {"value": text}}, openId, "")
+            score_tempid = cfg_get("addition.wechat.score_tempid", "")
+            if score_tempid:
+                return self.send_template(score_tempid, {"score": {"value": text}}, openId, "")
+        if text.startswith("登录提示"):
+            login_notice_tempid = cfg_get("addition.wechat.login_notice_tempid")
+            if login_notice_tempid:
+                return self.send_template(login_notice_tempid, "", openId, "")
+
         token = self.get_access_token()
         url_msg = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?'
         body = {

@@ -243,7 +243,7 @@ def refresh_all_cookies(live_time=8.0, display_score=False):  # cookie有效时�
                 msgInfo[uid] = msg
                 if remain_time < 0:
                     print(color.red(" 已过期 需要重新登陆，将自动移除此cookie."))
-                    gl.pushprint("已过期 需要重新登陆!!!", uid)
+                    gl.pushprint("登录提示", uid)
                     remove_cookie(uid)
                 else:
                     # print(color.blue(" 有效"), end="")
