@@ -127,16 +127,13 @@ def start(nick_name=None):
     nohead, lock, stime, Single = get_argv()
     # info_shread = threads.MyThread("获取更新信息...", version.up_info)
     # info_shread.start()
-    isLogin = False
     user_list = user.list_user(printing=False)
     user.refresh_all_cookies()
     if len(user_list) == 0:
         user_list.append(["", "新用户"])
     for i in range(len(user_list)):
-        isLogin = False
         try:
             if nick_name == None or nick_name == user_list[i][1] or nick_name == user_list[i][0]:
-                isLogin = True
                 if not Single:
                     gl.pushprint(user_list[i][0] + "即将开始学xi", user_list[i][0])
                     threads.newTastandRun(start_learn, user_list[i][0], user_list[i][1])
@@ -146,8 +143,6 @@ def start(nick_name=None):
                     _learn.start()
         except:
             gl.pushprint("学习页面崩溃，学习终止")
-        if not isLogin and nick_name:
-            gl.pushprint("登录提示", user_list[i][0])
 
 
 def get_my_score(uid):
