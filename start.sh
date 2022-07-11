@@ -14,7 +14,7 @@ update() {
     echo "更新完成"
 }
 
-if [[ ${pullbranche} == "developing" ]]; then
+if [[ ${pullbranche} == "dev" ]]; then
     echo "当前处于开发模式，自动更新"
     update
 fi
